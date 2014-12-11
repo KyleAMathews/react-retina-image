@@ -33,3 +33,7 @@ React.createClass({
   }
 });
 ```
+
+## Attribution
+This component is largely a port of
+[retina.js](http://imulus.github.io/retinajs/) to React.js
