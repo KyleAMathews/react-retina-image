@@ -3,6 +3,9 @@ react-retina-image
 
 React component for serving high-resolution images to devices with retina displays
 
+## Demo
+http://kyleamathews.github.io/react-retina-image/
+
 ## Install
 `npm install react-retina-image`
 
