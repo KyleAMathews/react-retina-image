@@ -11,7 +11,11 @@ module.exports = React.createClass
       <br />
       {if isRetina() then <h2>Your screen is retina!</h2> else <h2>Your screen is not retina</h2>}
 
-      <h3>This image has a @2x version</h3>
+      {if isRetina()
+        <h3>This image loaded its retina version after checking if it exists</h3>
+       else
+        <h3>This image won't load its retina version</h3>
+      }
       <pre><code>
       {"""
       <RetinaImage src="./tower.jpg" />
@@ -19,7 +23,7 @@ module.exports = React.createClass
       </code></pre>
       <RetinaImage src="./tower.jpg" />
 
-      <h3>This image doesn't have a @2x version so keeps the lower resolution version</h3>
+      <h3>This image doesn't have a @2x version so stays at its lower resolution version</h3>
       <pre><code>
       {"""
       <RetinaImage src="./path.jpg" />
