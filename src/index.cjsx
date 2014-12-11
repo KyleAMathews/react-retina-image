@@ -7,25 +7,25 @@ module.exports = React.createClass
   displayName: 'RetinaImage'
 
   getInitialState: ->
-    if isRetina() and not @props.checkIf2xExists
+    if isRetina() and not @props.checkIfRetinaImgExists
       src: @get2xPath()
     else
       src: @props.src
 
   propTypes:
     src: React.PropTypes.string.isRequired
-    checkIf2xExists: React.PropTypes.bool
+    checkIfRetinaImgExists: React.PropTypes.bool
     retinaImageSuffix: React.PropTypes.string
     handleOnLoad: React.PropTypes.func
 
   getDefaultProps: ->
-    checkIf2xExists: true
+    checkIfRetinaImgExists: true
     forceOriginalDimensions: true
     retinaImageSuffix: '@2x'
     handleOnLoad: ->
 
   componentWillMount: ->
-    if isRetina() and @props.checkIf2xExists
+    if isRetina() and @props.checkIfRetinaImgExists
       imageExists(@get2xPath(), (exists) =>
         # If original image has loaded already (we have to wait so we know
         # the original image dimensions), then set the retina image path.
