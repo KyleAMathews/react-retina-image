@@ -45,7 +45,6 @@ module.exports = React.createClass
     # Customers of component might care when the image loads.
     @props.handleOnLoad(e)
 
-    # This is generally you want unless manually controlling width.
     if @props.forceOriginalDimensions
       @setState {
         width: @refs.img.getDOMNode().clientWidth
