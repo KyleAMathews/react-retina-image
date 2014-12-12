@@ -6,12 +6,6 @@ path = require 'path'
 module.exports = React.createClass
   displayName: 'RetinaImage'
 
-  getInitialState: ->
-    if isRetina() and not @props.checkIfRetinaImgExists
-      src: @get2xPath()
-    else
-      src: @props.src
-
   propTypes:
     src: React.PropTypes.string.isRequired
     checkIfRetinaImgExists: React.PropTypes.bool
@@ -24,26 +18,28 @@ module.exports = React.createClass
     retinaImageSuffix: '@2x'
     handleOnLoad: ->
 
-  componentWillMount: ->
+  componentDidMount: ->
     if isRetina() and @props.checkIfRetinaImgExists
-      imageExists(@get2xPath(), (exists) =>
+      imageExists @getRetinaPath(), (exists) =>
         # If original image has loaded already (we have to wait so we know
         # the original image dimensions), then set the retina image path.
-        if exists and @state.imgLoaded
-          @setState src: @get2xPath()
+        if exists and @state?.imgLoaded
+          @swapSrc @getRetinaPath()
         else
           @setState retinaImgExists: true
-      )
+    # If the check isn't needed, immediately swap in the retina path
+    else if isRetina() and not @props.checkIfRetinaImgExists
+      @swapSrc @getRetinaPath()
 
   render: ->
     props = @props
     # Don't override passed in width/height.
-    if @state.width and not @props.width?
+    if @state?.width and not @props.width?
       props.width = @state.width
-    if @state.height and not @props.height?
+    if @state?.height and not @props.height?
       props.height = @state.height
 
-    <img ref="img" {...@props} src={@state.src} onLoad={@handleOnLoad} />
+    <img ref="img" {...@props} onLoad={@handleOnLoad} />
 
   handleOnLoad: (e) ->
     # Customers of component might care when the image loads.
@@ -59,11 +55,14 @@ module.exports = React.createClass
     @setState imgLoaded: true
 
     # If the retina image check has already finished, set the 2x path.
-    if @state.retinaImgExists
-      @setState src: get2xPath()
+    if @state?.retinaImgExists
+      @swapSrc getRetinaPath()
 
-  get2xPath: ->
+  getRetinaPath: ->
     basename = path.basename(@props.src, path.extname(@props.src))
     basename = basename + @props.retinaImageSuffix + path.extname(@props.src)
     src = @props.src.replace(path.basename(@props.src), basename)
     return src
+
+  swapSrc: (src) ->
+    @refs.img.getDOMNode().src = src
