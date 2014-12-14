@@ -7,7 +7,10 @@ module.exports = React.createClass
   displayName: 'RetinaImage'
 
   propTypes:
-    src: React.PropTypes.string.isRequired
+    src: React.PropTypes.oneOfType([
+      React.PropTypes.string
+      React.PropTypes.array
+    ]).isRequired
     checkIfRetinaImgExists: React.PropTypes.bool
     retinaImageSuffix: React.PropTypes.string
     handleOnLoad: React.PropTypes.func
@@ -17,6 +20,15 @@ module.exports = React.createClass
     forceOriginalDimensions: true
     retinaImageSuffix: '@2x'
     handleOnLoad: ->
+
+  getInitialState: ->
+    if Object.prototype.toString.call(@props.src) is '[object Array]'
+      return {
+        src: @props.src[0]
+        srcIsArray: true
+      }
+    else
+      return {src: @props.src}
 
   componentDidMount: ->
     if isRetina() and @props.checkIfRetinaImgExists
@@ -39,7 +51,7 @@ module.exports = React.createClass
     if @state?.height and not @props.height?
       props.height = @state.height
 
-    <img ref="img" {...@props} onLoad={@handleOnLoad} />
+    <img ref="img" {...@props} src={@state.src} onLoad={@handleOnLoad} />
 
   handleOnLoad: (e) ->
     # Customers of component might care when the image loads.
@@ -58,10 +70,13 @@ module.exports = React.createClass
       @swapSrc getRetinaPath()
 
   getRetinaPath: ->
-    basename = path.basename(@props.src, path.extname(@props.src))
-    basename = basename + @props.retinaImageSuffix + path.extname(@props.src)
-    src = @props.src.replace(path.basename(@props.src), basename)
-    return src
+    if @state.srcIsArray
+      return @props.src[1]
+    else
+      basename = path.basename(@props.src, path.extname(@props.src))
+      basename = basename + @props.retinaImageSuffix + path.extname(@props.src)
+      src = @props.src.replace(path.basename(@props.src), basename)
+      return src
 
   swapSrc: (src) ->
     @refs.img.getDOMNode().src = src

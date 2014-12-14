@@ -4,7 +4,7 @@ isRetina = require 'is-retina'
 
 module.exports = React.createClass
   render: ->
-    <div style={"max-width":'500px', margin:'0 auto'}>
+    <div style={"maxWidth":'500px', margin:'0 auto'}>
       <h1>React-retina-image</h1>
       <a href="https://github.com/KyleAMathews/react-retina-image">Code on Github</a>
       <br />
@@ -41,5 +41,18 @@ module.exports = React.createClass
         """}
       </code></pre>
       <RetinaImage src="./ocean.jpg" checkIf2xExists=false width=500 />
+
+      <h3>If you don't have predictable names for the retina and non-retina
+      versions of images, you can simply pass in an array of images as src where
+      the first src is the non-retina version and the second is the retina version.
+      </h3>
+      <pre><code>
+      {"""
+      <RetinaImage
+       src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
+        """}
+      </code></pre>
+      <RetinaImage
+       src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
 
     </div>
