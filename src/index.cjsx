@@ -6,14 +6,11 @@ path = require 'path'
 module.exports = React.createClass
   displayName: 'RetinaImage'
 
-  getInitialState: ->
-    if isRetina() and not @props.checkIfRetinaImgExists
-      src: @get2xPath()
-    else
-      src: @props.src
-
   propTypes:
-    src: React.PropTypes.string.isRequired
+    src: React.PropTypes.oneOfType([
+      React.PropTypes.string
+      React.PropTypes.array
+    ]).isRequired
     checkIfRetinaImgExists: React.PropTypes.bool
     retinaImageSuffix: React.PropTypes.string
     handleOnLoad: React.PropTypes.func
@@ -24,23 +21,34 @@ module.exports = React.createClass
     retinaImageSuffix: '@2x'
     handleOnLoad: ->
 
-  componentWillMount: ->
+  getInitialState: ->
+    if Object.prototype.toString.call(@props.src) is '[object Array]'
+      return {
+        src: @props.src[0]
+        srcIsArray: true
+      }
+    else
+      return {src: @props.src}
+
+  componentDidMount: ->
     if isRetina() and @props.checkIfRetinaImgExists
-      imageExists(@get2xPath(), (exists) =>
+      imageExists @getRetinaPath(), (exists) =>
         # If original image has loaded already (we have to wait so we know
         # the original image dimensions), then set the retina image path.
-        if exists and @state.imgLoaded
-          @setState src: @get2xPath()
+        if exists and @state?.imgLoaded
+          @swapSrc @getRetinaPath()
         else
           @setState retinaImgExists: true
-      )
+    # If the check isn't needed, immediately swap in the retina path
+    else if isRetina() and not @props.checkIfRetinaImgExists
+      @swapSrc @getRetinaPath()
 
   render: ->
     props = @props
     # Don't override passed in width/height.
-    if @state.width and not @props.width?
+    if @state?.width and not @props.width?
       props.width = @state.width
-    if @state.height and not @props.height?
+    if @state?.height and not @props.height?
       props.height = @state.height
 
     <img ref="img" {...@props} src={@state.src} onLoad={@handleOnLoad} />
@@ -49,7 +57,6 @@ module.exports = React.createClass
     # Customers of component might care when the image loads.
     @props.handleOnLoad(e)
 
-    # This is generally you want unless manually controlling width.
     if @props.forceOriginalDimensions
       @setState {
         width: @refs.img.getDOMNode().clientWidth
@@ -59,11 +66,17 @@ module.exports = React.createClass
     @setState imgLoaded: true
 
     # If the retina image check has already finished, set the 2x path.
-    if @state.retinaImgExists
-      @setState src: get2xPath()
+    if @state?.retinaImgExists
+      @swapSrc getRetinaPath()
 
-  get2xPath: ->
-    basename = path.basename(@props.src, path.extname(@props.src))
-    basename = basename + @props.retinaImageSuffix + path.extname(@props.src)
-    src = @props.src.replace(path.basename(@props.src), basename)
-    return src
+  getRetinaPath: ->
+    if @state.srcIsArray
+      return @props.src[1]
+    else
+      basename = path.basename(@props.src, path.extname(@props.src))
+      basename = basename + @props.retinaImageSuffix + path.extname(@props.src)
+      src = @props.src.replace(path.basename(@props.src), basename)
+      return src
+
+  swapSrc: (src) ->
+    @refs.img.getDOMNode().src = src

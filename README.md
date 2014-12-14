@@ -32,4 +32,16 @@ React.createClass({
     <RetinaImage src="./images/balloon.jpg" checkIfRetinaImgExists=false />
   }
 });
+
+// Can also pass in array of srcs.
+React.createClass({
+  render: function () {
+    <RetinaImage
+       src={["./images/balloon.jpg", "./images/bigger-baloon.jpg]} />
+  }
+});
 ```
+
+## Attribution
+This component is largely a port of
+[retina.js](http://imulus.github.io/retinajs/) to React.js
