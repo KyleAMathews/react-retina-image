@@ -1,5 +1,6 @@
 React = require 'react'
 isRetina = require 'is-retina'
+isArray = require 'isarray'
 imageExists = require 'image-exists'
 path = require 'path'
 
@@ -21,8 +22,8 @@ module.exports = React.createClass
     retinaImageSuffix: '@2x'
     handleOnLoad: ->
 
-  getInitialState: ->
-    if Object.prototype.toString.call(@props.src) is '[object Array]'
+  wrangleProps: (props=@props) ->
+    if isArray(@props.src)
       return {
         src: @props.src[0]
         srcIsArray: true
@@ -30,7 +31,29 @@ module.exports = React.createClass
     else
       return {src: @props.src}
 
+  componentWillReceiveProps: (nextProps) ->
+    @setState @wrangleProps(nextProps)
+
+  getInitialState: ->
+    @wrangleProps()
+
   componentDidMount: ->
+    @checkForRetina()
+
+  componentDidUpdate: ->
+    @checkForRetina()
+
+  render: ->
+    props = @props
+    # Don't override passed in width/height.
+    if @state?.width and not @props.width?
+      props.width = @state.width
+    if @state?.height and not @props.height?
+      props.height = @state.height
+
+    <img ref="img" {...@props} src={@state.src} onLoad={@handleOnLoad} />
+
+  checkForRetina: ->
     if isRetina() and @props.checkIfRetinaImgExists
       imageExists @getRetinaPath(), (exists) =>
         # If original image has loaded already (we have to wait so we know
@@ -42,16 +65,6 @@ module.exports = React.createClass
     # If the check isn't needed, immediately swap in the retina path
     else if isRetina() and not @props.checkIfRetinaImgExists
       @swapSrc @getRetinaPath()
-
-  render: ->
-    props = @props
-    # Don't override passed in width/height.
-    if @state?.width and not @props.width?
-      props.width = @state.width
-    if @state?.height and not @props.height?
-      props.height = @state.height
-
-    <img ref="img" {...@props} src={@state.src} onLoad={@handleOnLoad} />
 
   handleOnLoad: (e) ->
     # Customers of component might care when the image loads.

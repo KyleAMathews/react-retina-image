@@ -1,8 +1,20 @@
 React = require('react')
 RetinaImage = require '../src/index'
 isRetina = require 'is-retina'
+_ = require 'underscore'
 
 module.exports = React.createClass
+
+  getInitialState: ->
+    picsArray: [
+      './tower.jpg'
+      './path.jpg'
+      './ocean.jpg'
+    ]
+
+  componentDidMount: ->
+    setInterval((=> @forceUpdate()), 2000)
+
   render: ->
     <div style={"maxWidth":'500px', margin:'0 auto'}>
       <h1>React-retina-image</h1>
@@ -54,5 +66,15 @@ module.exports = React.createClass
       </code></pre>
       <RetinaImage
        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
+
+      <h3>Every two seconds this picture will update</h3>
+      <pre><code>
+      {"""
+      <RetinaImage
+       src={@state.picsArray[_.random(0,2)]} />
+        """}
+      </code></pre>
+      <RetinaImage
+       src={@state.picsArray[_.random(0,2)]} />
 
     </div>
