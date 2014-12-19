@@ -9,7 +9,8 @@
   "dependencies": {
     "image-exists": "^1.0.0",
     "is-retina": "^1.0.3",
-    "isarray": "0.0.1"
+    "isarray": "0.0.1",
+    "object-assign": "^2.0.0"
   },
   "devDependencies": {
     "cjsx-loader": "^1.1.0",

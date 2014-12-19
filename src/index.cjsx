@@ -3,6 +3,7 @@ isRetina = require 'is-retina'
 isArray = require 'isarray'
 imageExists = require 'image-exists'
 path = require 'path'
+objectAssign = require 'object-assign'
 
 module.exports = React.createClass
   displayName: 'RetinaImage'
@@ -20,19 +21,17 @@ module.exports = React.createClass
     checkIfRetinaImgExists: true
     forceOriginalDimensions: true
     retinaImageSuffix: '@2x'
-    handleOnLoad: ->
-
-  wrangleProps: (props=@props) ->
-    if isArray(@props.src)
-      return {
-        src: @props.src[0]
-        srcIsArray: true
-      }
-    else
-      return {src: @props.src}
 
   componentWillReceiveProps: (nextProps) ->
-    @setState @wrangleProps(nextProps)
+    # The src has changed, null everything out.
+    if nextProps.src isnt @props.src
+      @setState objectAssign @wrangleProps(nextProps), {
+        width: null
+        height: null
+        imgLoaded: null
+        retinaImgExists: null
+        retinaCheckComplete: null
+      }
 
   getInitialState: ->
     @wrangleProps()
@@ -45,30 +44,54 @@ module.exports = React.createClass
 
   render: ->
     props = @props
+
     # Don't override passed in width/height.
     if @state?.width and not @props.width?
       props.width = @state.width
     if @state?.height and not @props.height?
       props.height = @state.height
 
-    <img ref="img" {...@props} src={@state.src} onLoad={@handleOnLoad} />
+    <img
+      ref="img"
+      {...@props}
+      src={@state.src}
+      onLoad={@handleOnLoad} />
+
+  # src can be a href or an array of hrefs.
+  wrangleProps: (props=@props) ->
+    if isArray(props.src)
+      return {
+        src: props.src[0]
+        srcIsArray: true
+      }
+    else
+      return {
+        src: props.src
+        srcIsArray: false
+      }
 
   checkForRetina: ->
+    if @state.retinaCheckComplete then return
+
     if isRetina() and @props.checkIfRetinaImgExists
       imageExists @getRetinaPath(), (exists) =>
         # If original image has loaded already (we have to wait so we know
         # the original image dimensions), then set the retina image path.
         if exists and @state?.imgLoaded
           @swapSrc @getRetinaPath()
-        else
+        else if exists
           @setState retinaImgExists: true
+
     # If the check isn't needed, immediately swap in the retina path
     else if isRetina() and not @props.checkIfRetinaImgExists
       @swapSrc @getRetinaPath()
 
+    @setState retinaCheckComplete: true
+
   handleOnLoad: (e) ->
     # Customers of component might care when the image loads.
-    @props.handleOnLoad(e)
+    if @props.handleOnLoad?
+      @props.handleOnLoad(e)
 
     if @props.forceOriginalDimensions
       @setState {
@@ -80,7 +103,7 @@ module.exports = React.createClass
 
     # If the retina image check has already finished, set the 2x path.
     if @state?.retinaImgExists
-      @swapSrc getRetinaPath()
+      @swapSrc @getRetinaPath()
 
   getRetinaPath: ->
     if @state.srcIsArray

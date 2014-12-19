@@ -11,9 +11,7 @@ module.exports = React.createClass
       './path.jpg'
       './ocean.jpg'
     ]
-
-  componentDidMount: ->
-    setInterval((=> @forceUpdate()), 2000)
+    picIndex: 0
 
   render: ->
     <div style={"maxWidth":'500px', margin:'0 auto'}>
@@ -67,7 +65,8 @@ module.exports = React.createClass
       <RetinaImage
        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
 
-      <h3>Every two seconds this picture will update</h3>
+      <h3>For testing updates. Click on the image and it'll cycle forward
+      through pictures</h3>
       <pre><code>
       {"""
       <RetinaImage
@@ -75,6 +74,14 @@ module.exports = React.createClass
         """}
       </code></pre>
       <RetinaImage
-       src={@state.picsArray[_.random(0,2)]} />
+        onClick={@handleClick}
+        src={@state.picsArray[@state.picIndex]} />
 
     </div>
+
+  handleClick: ->
+    newIndex = @state.picIndex + 1
+    if newIndex > 2
+      newIndex = 0
+
+    @setState picIndex: newIndex
