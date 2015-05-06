@@ -22,6 +22,8 @@ false as then the original image is never loaded. In this case you'll
 need to set the width manually either as a prop or using css. Defaults to true.
 * `retinaImageSuffix` — defaults to `@2x` but you can change this if you
   use a different naming convention.
+* `onLoad` — handle the image onLoad event.
+* `onError` — handle the image onError event.
 
 ```javascript
 var React = require('react');

@@ -17,11 +17,13 @@ module.exports = React.createClass
     retinaImageSuffix: React.PropTypes.string
     handleOnLoad: React.PropTypes.func # Deprecated.
     onLoad: React.PropTypes.func
+    onError: React.PropTypes.func
 
   getDefaultProps: ->
     checkIfRetinaImgExists: true
     forceOriginalDimensions: true
     retinaImageSuffix: '@2x'
+    onError: ->
 
   componentWillReceiveProps: (nextProps) ->
     # The src has changed, null everything out.
@@ -56,6 +58,7 @@ module.exports = React.createClass
       ref="img"
       {...@props}
       src={@state.src}
+      onError={@props.onError}
       onLoad={@handleOnLoad} />
 
   # src can be a href or an array of hrefs.
