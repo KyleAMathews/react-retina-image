@@ -15,7 +15,8 @@ module.exports = React.createClass
     ]).isRequired
     checkIfRetinaImgExists: React.PropTypes.bool
     retinaImageSuffix: React.PropTypes.string
-    handleOnLoad: React.PropTypes.func
+    handleOnLoad: React.PropTypes.func # Deprecated.
+    onLoad: React.PropTypes.func
 
   getDefaultProps: ->
     checkIfRetinaImgExists: true
@@ -90,6 +91,10 @@ module.exports = React.createClass
 
   handleOnLoad: (e) ->
     # Customers of component might care when the image loads.
+    if @props.onLoad?
+      @props.onLoad(e)
+    # handleOnLoad was in an earlier version (wrong name) and will be removed
+    # at the next major release.
     if @props.handleOnLoad?
       @props.handleOnLoad(e)
 
