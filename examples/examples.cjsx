@@ -63,7 +63,9 @@ module.exports = React.createClass
         """}
       </code></pre>
       <RetinaImage
-       src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
+        style={{width: 500}}
+        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]}
+      />
 
       <h3>For testing updates. Click on the image and it'll cycle forward
       through pictures</h3>
@@ -74,6 +76,7 @@ module.exports = React.createClass
         """}
       </code></pre>
       <RetinaImage
+        style={{width: 500}}
         onClick={@handleClick}
         src={@state.picsArray[@state.picIndex]} />
 

@@ -8,7 +8,8 @@ module.exports = {
     './examples/index'
   ],
   devServer: {
-    contentBase: './examples/'
+    contentBase: './examples/',
+    hot: true
   },
   devtool: "eval",
   debug: true,

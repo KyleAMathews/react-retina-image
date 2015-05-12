@@ -3,7 +3,7 @@ isRetina = require 'is-retina'
 isArray = require 'isarray'
 imageExists = require 'image-exists'
 path = require 'path'
-objectAssign = require 'object-assign'
+assign = require 'object-assign'
 
 module.exports = React.createClass
   displayName: 'RetinaImage'
@@ -28,7 +28,7 @@ module.exports = React.createClass
   componentWillReceiveProps: (nextProps) ->
     # The src has changed, null everything out.
     if nextProps.src isnt @props.src
-      @setState objectAssign @wrangleProps(nextProps), {
+      @setState assign @wrangleProps(nextProps), {
         width: null
         height: null
         imgLoaded: null
@@ -46,17 +46,10 @@ module.exports = React.createClass
     @checkForRetina()
 
   render: ->
-    props = @props
-
-    # Don't override passed in width/height.
-    if @state?.width and not @props.width?
-      props.width = @state.width
-    if @state?.height and not @props.height?
-      props.height = @state.height
-
     <img
       ref="img"
       {...@props}
+      {...@state}
       src={@state.src}
       onError={@props.onError}
       onLoad={@handleOnLoad} />
@@ -82,15 +75,18 @@ module.exports = React.createClass
         # If original image has loaded already (we have to wait so we know
         # the original image dimensions), then set the retina image path.
         if exists and @state?.imgLoaded
-          @swapSrc @getRetinaPath()
+          @setState src: @getRetinaPath()
         else if exists
           @setState retinaImgExists: true
 
+        @setState retinaCheckComplete: true
+
     # If the check isn't needed, immediately swap in the retina path
     else if isRetina() and not @props.checkIfRetinaImgExists
-      @swapSrc @getRetinaPath()
+      @setState src: @getRetinaPath()
 
-    @setState retinaCheckComplete: true
+      @setState retinaCheckComplete: true
+
 
   handleOnLoad: (e) ->
     # Customers of component might care when the image loads.
@@ -111,7 +107,7 @@ module.exports = React.createClass
 
     # If the retina image check has already finished, set the 2x path.
     if @state?.retinaImgExists
-      @swapSrc @getRetinaPath()
+      @setState src: @getRetinaPath()
 
   getRetinaPath: ->
     if @state.srcIsArray
@@ -121,6 +117,3 @@ module.exports = React.createClass
       basename = basename + @props.retinaImageSuffix + path.extname(@props.src)
       src = @props.src.replace(path.basename(@props.src), basename)
       return src
-
-  swapSrc: (src) ->
-    @refs.img.getDOMNode().src = src
