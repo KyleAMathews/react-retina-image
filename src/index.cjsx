@@ -4,6 +4,7 @@ isArray = require 'isarray'
 imageExists = require 'image-exists'
 path = require 'path'
 assign = require 'object-assign'
+arrayEqual = require 'array-equal'
 
 module.exports = React.createClass
   displayName: 'RetinaImage'
@@ -26,8 +27,13 @@ module.exports = React.createClass
     onError: ->
 
   componentWillReceiveProps: (nextProps) ->
-    # The src has changed, null everything out.
-    if nextProps.src isnt @props.src
+    isEqual = true
+    if isArray(@props.src) and isArray(nextProps.src)
+      isEqual = arrayEqual(@props.src, nextProps.src)
+    else
+      isEqual = @props.src is nextProps.src
+
+    unless isEqual
       @setState assign @wrangleProps(nextProps), {
         width: null
         height: null
@@ -122,7 +128,7 @@ module.exports = React.createClass
     @setState imgLoaded: true
 
     # If the retina image check has already finished, set the 2x path.
-    if @state?.retinaImgExists
+    if @state?.retinaImgExists or not @props.checkIfRetinaImgExists
       @setState src: @getRetinaPath()
 
   getRetinaPath: ->
