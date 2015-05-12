@@ -41,6 +41,7 @@ module.exports = React.createClass
 
   componentDidMount: ->
     @checkForRetina()
+    @checkLoaded()
 
   componentDidUpdate: ->
     @checkForRetina()
@@ -86,6 +87,21 @@ module.exports = React.createClass
       @setState src: @getRetinaPath()
 
       @setState retinaCheckComplete: true
+
+  # For server-rendered code, sometimes images will already be loaded by the time
+  # this module mounts.
+  # http://stackoverflow.com/a/1977898
+  checkLoaded: ->
+    el = @refs.img.getDOMNode()
+
+    unless el.complete
+      return false
+
+    if el.naturalWidth is 0
+      return false
+
+    # No other way to disprove it's loaded so we'll assume it's ok.
+    @handleOnLoad()
 
 
   handleOnLoad: (e) ->
