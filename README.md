@@ -24,6 +24,7 @@ need to set the width manually either as a prop or using css. Defaults to true.
   use a different naming convention.
 * `onLoad` — handle the image onLoad event.
 * `onError` — handle the image onError event.
+* `src` — string or array for the image srcs.
 
 ```javascript
 var React = require('react');
