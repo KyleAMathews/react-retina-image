@@ -98,7 +98,7 @@ module.exports = React.createClass
   # this module mounts.
   # http://stackoverflow.com/a/1977898
   checkLoaded: ->
-    el = @refs.img.getDOMNode()
+    el = @refs.img
 
     unless el.complete
       return false
@@ -121,8 +121,8 @@ module.exports = React.createClass
 
     if @props.forceOriginalDimensions
       @setState {
-        width: @refs.img.getDOMNode().clientWidth
-        height: @refs.img.getDOMNode().clientHeight
+        width: @refs.img.clientWidth
+        height: @refs.img.clientHeight
       }
 
     @setState imgLoaded: true
