@@ -18,7 +18,7 @@
     "coffee-loader": "^0.7.2",
     "coffee-react": "^4.0.0",
     "coffee-script": "^1.9.2",
-    "css-loader": "^0.20.2",
+    "css-loader": "^0.21.0",
     "gulp": "^3.8.11",
     "react": "^0.14.0",
     "react-hot-loader": "^1.2.6",
