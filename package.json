@@ -24,7 +24,7 @@
     "react-hot-loader": "^1.2.6",
     "style-loader": "^0.13.0",
     "underscore": "^1.8.3",
-    "webpack": "^1.8.11",
+    "webpack": "^1.12.8",
     "webpack-dev-server": "^1.8.2"
   },
   "directories": {
