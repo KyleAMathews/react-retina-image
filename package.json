@@ -11,7 +11,7 @@
     "image-exists": "^1.1.0",
     "is-retina": "^1.0.3",
     "isarray": "0.0.1",
-    "object-assign": "^4.0.0"
+    "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "cjsx-loader": "^3.0.0",
