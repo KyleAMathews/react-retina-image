@@ -10,19 +10,19 @@
     "array-equal": "^1.0.0",
     "image-exists": "^1.1.0",
     "is-retina": "^1.0.3",
-    "isarray": "0.0.1",
-    "object-assign": "^4.0.0"
+    "isarray": "^1.0.0",
+    "object-assign": "^4.1.0"
   },
   "devDependencies": {
     "cjsx-loader": "^3.0.0",
     "coffee-loader": "^0.7.2",
-    "coffee-react": "^4.0.0",
+    "coffee-react": "^5.0.0",
     "coffee-script": "^1.9.2",
-    "css-loader": "^0.21.0",
-    "gulp": "^3.8.11",
+    "css-loader": "^0.23.1",
+    "gulp": "^3.9.1",
     "react": "^15.0.2",
     "react-hot-loader": "^1.2.6",
-    "style-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
     "webpack": "^1.8.11",
     "webpack-dev-server": "^1.8.2"
