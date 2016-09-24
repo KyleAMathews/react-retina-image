@@ -17,7 +17,7 @@
     "cjsx-loader": "^3.0.0",
     "coffee-loader": "^0.7.2",
     "coffee-react": "^5.0.0",
-    "coffee-script": "^1.9.2",
+    "coffee-script": "^1.11.0",
     "css-loader": "^0.23.1",
     "gulp": "^3.9.1",
     "react": "^15.0.2",
