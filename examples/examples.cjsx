@@ -46,11 +46,11 @@ module.exports = React.createClass
       {"""
       <RetinaImage
        src="./ocean.jpg"
-       checkIf2xExists=false
+       checkIfRetinaImgExists=false
        width=500 />
         """}
       </code></pre>
-      <RetinaImage src="./ocean.jpg" checkIf2xExists=false width=500 />
+      <RetinaImage src="./ocean.jpg" checkIfRetinaImgExists=false width=500 />
 
       <h3>If you don't have predictable names for the retina and non-retina
       versions of images, you can simply pass in an array of images as src where
@@ -72,17 +72,19 @@ module.exports = React.createClass
       <pre><code>
       {"""
       <RetinaImage
-       src={@state.picsArray[_.random(0,2)]} />
+       style={{width: 500}}
+       onClick={@cyclePics}
+       src={@state.picsArray[@state.picIndex]} />
         """}
       </code></pre>
       <RetinaImage
         style={{width: 500}}
-        onClick={@handleClick}
+        onClick={@cyclePics}
         src={@state.picsArray[@state.picIndex]} />
 
     </div>
 
-  handleClick: ->
+  cyclePics: ->
     newIndex = @state.picIndex + 1
     if newIndex > 2
       newIndex = 0

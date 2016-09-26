@@ -15,6 +15,7 @@ module.exports = React.createClass
       React.PropTypes.array
     ]).isRequired
     checkIfRetinaImgExists: React.PropTypes.bool
+    forceOriginalDimensions: React.PropTypes.bool
     retinaImageSuffix: React.PropTypes.string
     handleOnLoad: React.PropTypes.func # Deprecated.
     onLoad: React.PropTypes.func
@@ -53,13 +54,31 @@ module.exports = React.createClass
     @checkForRetina()
 
   render: ->
+    # Propagate only the props that `<img>` supports, avoid React `Unknown props` warning. https://fb.me/react-unknown-prop
+    # CoffeeScript does not support splat `...` for object destructuring so using `assign` and `delete`. http://stackoverflow.com/a/20298038
+    imgProps = assign {}, @props
+    delete imgProps.src
+    delete imgProps.checkIfRetinaImgExists
+    delete imgProps.forceOriginalDimensions
+    delete imgProps.retinaImageSuffix
+    delete imgProps.handleOnLoad
+    delete imgProps.onLoad
+    delete imgProps.onError
+
+    # Override some of the props for `<img>`.
+    imgProps.src = @state.src
+    imgProps.onLoad = @handleOnLoad
+    imgProps.onError = @props.onError
+
+    if @state.width >= 0
+      imgProps.width = @state.width
+
+    if @state.height >= 0
+      imgProps.height = @state.height
+
     <img
-      ref="img"
-      {...@props}
-      {...@state}
-      src={@state.src}
-      onError={@props.onError}
-      onLoad={@handleOnLoad} />
+      {...imgProps}
+      ref="img" />
 
   # src can be a href or an array of hrefs.
   wrangleProps: (props=@props) ->
