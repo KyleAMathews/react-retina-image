@@ -1,38 +1,41 @@
 {
   "name": "react-retina-image",
   "description": "React component for serving high-resolution images to devices with retina displays",
-  "version": "1.0.3",
+  "version": "2.0.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/KyleAMathews/react-retina-image/issues"
   },
   "dependencies": {
-    "image-exists": "^1.0.0",
-    "is-retina": "^1.0.3"
+    "array-equal": "^1.0.0",
+    "image-exists": "^1.1.0",
+    "is-retina": "^1.0.3",
+    "object-assign": "^4.1.0"
   },
   "devDependencies": {
-    "coffee-script": "^1.8.0",
-    "cjsx-loader": "^1.1.0",
+    "cjsx-loader": "^3.0.0",
     "coffee-loader": "^0.7.2",
-    "coffee-react": "^2.1.2",
-    "css-loader": "^0.9.0",
-    "gulp": "^3.8.10",
-    "react": "^0.12.1",
-    "react-hot-loader": "^0.5.0",
-    "style-loader": "^0.8.2",
-    "underscore": "^1.7.0",
-    "webpack": "^1.4.13",
-    "webpack-dev-server": "^1.6.6"
+    "coffee-react": "^5.0.0",
+    "coffee-script": "^1.11.0",
+    "css-loader": "^0.25.0",
+    "gulp": "^3.9.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-hot-loader": "^1.2.6",
+    "style-loader": "^0.13.1",
+    "underscore": "^1.8.3",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
   },
   "directories": {
     "example": "examples"
   },
   "homepage": "https://github.com/KyleAMathews/react-retina-image",
   "keywords": [
+    "image",
     "react",
     "react-component",
-    "retina",
-    "image"
+    "retina"
   ],
   "license": "MIT",
   "main": "dist/index.js",

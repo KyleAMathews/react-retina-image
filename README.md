@@ -22,6 +22,11 @@ false as then the original image is never loaded. In this case you'll
 need to set the width manually either as a prop or using css. Defaults to true.
 * `retinaImageSuffix` — defaults to `@2x` but you can change this if you
   use a different naming convention.
+* `onLoad` — handle the image onLoad event.
+* `onError` — handle the image onError event.
+* `src` — string or array for the image srcs. [See the
+  demo](http://kyleamathews.github.io/react-retina-image/) for examples
+of how to format your src string or array.
 
 ```javascript
 var React = require('react');
@@ -37,7 +42,7 @@ React.createClass({
 React.createClass({
   render: function () {
     <RetinaImage
-       src={["./images/balloon.jpg", "./images/bigger-baloon.jpg]} />
+       src={["./images/balloon.jpg", "./images/bigger-balloon.jpg]} />
   }
 });
 ```
