@@ -1,6 +1,5 @@
 React = require 'react'
 isRetina = require 'is-retina'
-isArray = require 'isarray'
 imageExists = require 'image-exists'
 path = require 'path'
 assign = require 'object-assign'
@@ -29,7 +28,7 @@ module.exports = React.createClass
 
   componentWillReceiveProps: (nextProps) ->
     isEqual = true
-    if isArray(@props.src) and isArray(nextProps.src)
+    if Array.isArray(@props.src) and Array.isArray(nextProps.src)
       isEqual = arrayEqual(@props.src, nextProps.src)
     else
       isEqual = @props.src is nextProps.src
@@ -82,7 +81,7 @@ module.exports = React.createClass
 
   # src can be a href or an array of hrefs.
   wrangleProps: (props=@props) ->
-    if isArray(props.src)
+    if Array.isArray(props.src)
       return {
         src: props.src[0]
         srcIsArray: true

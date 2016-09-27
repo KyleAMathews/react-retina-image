@@ -10,7 +10,6 @@
     "array-equal": "^1.0.0",
     "image-exists": "^1.1.0",
     "is-retina": "^1.0.3",
-    "isarray": "^2.0.0",
     "object-assign": "^4.1.0"
   },
   "devDependencies": {
