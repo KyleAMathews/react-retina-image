@@ -1,8 +1,18 @@
 React = require('react')
 RetinaImage = require '../src/index'
 isRetina = require 'is-retina'
+_ = require 'underscore'
 
 module.exports = React.createClass
+
+  getInitialState: ->
+    picsArray: [
+      './tower.jpg'
+      './path.jpg'
+      './ocean.jpg'
+    ]
+    picIndex: 0
+
   render: ->
     <div style={"maxWidth":'500px', margin:'0 auto'}>
       <h1>React-retina-image</h1>
@@ -36,11 +46,11 @@ module.exports = React.createClass
       {"""
       <RetinaImage
        src="./ocean.jpg"
-       checkIf2xExists=false
+       checkIfRetinaImgExists=false
        width=500 />
         """}
       </code></pre>
-      <RetinaImage src="./ocean.jpg" checkIf2xExists=false width=500 />
+      <RetinaImage src="./ocean.jpg" checkIfRetinaImgExists=false width=500 />
 
       <h3>If you don't have predictable names for the retina and non-retina
       versions of images, you can simply pass in an array of images as src where
@@ -53,6 +63,30 @@ module.exports = React.createClass
         """}
       </code></pre>
       <RetinaImage
-       src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
+        style={{width: 500}}
+        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]}
+      />
+
+      <h3>For testing updates. Click on the image and it'll cycle forward
+      through pictures</h3>
+      <pre><code>
+      {"""
+      <RetinaImage
+       style={{width: 500}}
+       onClick={@cyclePics}
+       src={@state.picsArray[@state.picIndex]} />
+        """}
+      </code></pre>
+      <RetinaImage
+        style={{width: 500}}
+        onClick={@cyclePics}
+        src={@state.picsArray[@state.picIndex]} />
 
     </div>
+
+  cyclePics: ->
+    newIndex = @state.picIndex + 1
+    if newIndex > 2
+      newIndex = 0
+
+    @setState picIndex: newIndex
