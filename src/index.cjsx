@@ -1,30 +1,33 @@
 React = require 'react'
+PropTypes = require 'prop-types'
 isRetina = require 'is-retina'
 imageExists = require 'image-exists'
 path = require 'path'
 assign = require 'object-assign'
 arrayEqual = require 'array-equal'
 
-module.exports = React.createClass
-  displayName: 'RetinaImage'
-
-  propTypes:
-    src: React.PropTypes.oneOfType([
-      React.PropTypes.string
-      React.PropTypes.array
+module.exports = class RetinaImage extends React.Component
+  @propTypes:
+    src: PropTypes.oneOfType([
+      PropTypes.string
+      PropTypes.array
     ]).isRequired
-    checkIfRetinaImgExists: React.PropTypes.bool
-    forceOriginalDimensions: React.PropTypes.bool
-    retinaImageSuffix: React.PropTypes.string
-    handleOnLoad: React.PropTypes.func # Deprecated.
-    onLoad: React.PropTypes.func
-    onError: React.PropTypes.func
+    checkIfRetinaImgExists: PropTypes.bool
+    forceOriginalDimensions: PropTypes.bool
+    retinaImageSuffix: PropTypes.string
+    handleOnLoad: PropTypes.func # Deprecated.
+    onLoad: PropTypes.func
+    onError: PropTypes.func
 
-  getDefaultProps: ->
+  @defaultProps:
     checkIfRetinaImgExists: true
     forceOriginalDimensions: true
     retinaImageSuffix: '@2x'
     onError: ->
+
+  constructor: (props) ->
+    super props
+    @state = @wrangleProps()
 
   componentWillReceiveProps: (nextProps) ->
     isEqual = true
@@ -41,9 +44,6 @@ module.exports = React.createClass
         retinaImgExists: null
         retinaCheckComplete: null
       }
-
-  getInitialState: ->
-    @wrangleProps()
 
   componentDidMount: ->
     @checkForRetina()
@@ -128,7 +128,7 @@ module.exports = React.createClass
     @handleOnLoad()
 
 
-  handleOnLoad: (e) ->
+  handleOnLoad: (e) =>
     # Customers of component might care when the image loads.
     if @props.onLoad?
       @props.onLoad(e)

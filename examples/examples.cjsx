@@ -3,15 +3,16 @@ RetinaImage = require '../src/index'
 isRetina = require 'is-retina'
 _ = require 'underscore'
 
-module.exports = React.createClass
-
-  getInitialState: ->
-    picsArray: [
-      './tower.jpg'
-      './path.jpg'
-      './ocean.jpg'
-    ]
-    picIndex: 0
+module.exports = class Examples extends React.Component
+  constructor: (props) ->
+    super props
+    @state =
+      picsArray: [
+        './tower.jpg'
+        './path.jpg'
+        './ocean.jpg'
+      ]
+      picIndex: 0
 
   render: ->
     <div style={"maxWidth":'500px', margin:'0 auto'}>
@@ -84,7 +85,7 @@ module.exports = React.createClass
 
     </div>
 
-  cyclePics: ->
+  cyclePics: =>
     newIndex = @state.picIndex + 1
     if newIndex > 2
       newIndex = 0
