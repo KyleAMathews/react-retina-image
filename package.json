@@ -10,7 +10,8 @@
     "array-equal": "^1.0.0",
     "image-exists": "^1.1.0",
     "is-retina": "^1.0.3",
-    "object-assign": "^4.1.0"
+    "object-assign": "^4.1.0",
+    "prop-types": "^15.5.6"
   },
   "devDependencies": {
     "cjsx-loader": "^3.0.0",
@@ -19,8 +20,8 @@
     "coffee-script": "^1.11.0",
     "css-loader": "^0.25.0",
     "gulp": "^3.9.1",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "react": "^15.5.6",
+    "react-dom": "^15.5.6",
     "react-hot-loader": "^1.2.6",
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
