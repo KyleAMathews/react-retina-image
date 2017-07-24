@@ -42,7 +42,7 @@ React.createClass({
 React.createClass({
   render: function () {
     <RetinaImage
-       src={["./images/balloon.jpg", "./images/bigger-balloon.jpg]} />
+       src={["./images/balloon.jpg", "./images/bigger-balloon.jpg"]} />
   }
 });
 ```
