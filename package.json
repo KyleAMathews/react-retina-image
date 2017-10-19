@@ -11,9 +11,7 @@
     "image-exists": "^1.1.0",
     "is-retina": "^1.0.3",
     "object-assign": "^4.1.0",
-    "prop-types": "^15.5.6",
-    "react": "^15.5.3",
-    "react-dom": "^15.5.3"
+    "prop-types": "^15.5.6"
   },
   "devDependencies": {
     "cjsx-loader": "^3.0.0",
@@ -22,13 +20,16 @@
     "coffee-script": "^1.11.0",
     "css-loader": "^0.25.0",
     "gulp": "^3.9.1",
-    "react": "^15.5.6",
-    "react-dom": "^15.5.6",
-    "react-hot-loader": "^1.2.6",
+    "react": "^15.5.6 || ^16.0.0",
+    "react-dom": "^15.5.6 || ^16.0.0",
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
+  },
+  "peerDependencies": {
+    "react": "^15.5.6 || ^16.0.0",
+    "react-dom": "^15.5.6 || ^16.0.0"
   },
   "directories": {
     "example": "examples"
@@ -48,6 +49,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "./node_modules/.bin/webpack-dev-server --hot"
+    "watch": "./node_modules/.bin/webpack-dev-server"
   }
 }
