@@ -12,6 +12,7 @@ module.exports = class RetinaImage extends React.Component
       PropTypes.string
       PropTypes.array
     ]).isRequired
+    alt: PropTypes.string
     checkIfRetinaImgExists: PropTypes.bool
     forceOriginalDimensions: PropTypes.bool
     retinaImageSuffix: PropTypes.string
@@ -20,6 +21,7 @@ module.exports = class RetinaImage extends React.Component
     onError: PropTypes.func
 
   @defaultProps:
+    alt: null
     checkIfRetinaImgExists: true
     forceOriginalDimensions: true
     retinaImageSuffix: '@2x'
@@ -55,6 +57,7 @@ module.exports = class RetinaImage extends React.Component
   render: ->
     # Propagate only the props that `<img>` supports, avoid React `Unknown props` warning. https://fb.me/react-unknown-prop
     # CoffeeScript does not support splat `...` for object destructuring so using `assign` and `delete`. http://stackoverflow.com/a/20298038
+    # Delete props except `alt`
     imgProps = assign {}, @props
     delete imgProps.src
     delete imgProps.checkIfRetinaImgExists

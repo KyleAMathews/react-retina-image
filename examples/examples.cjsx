@@ -29,29 +29,30 @@ module.exports = class Examples extends React.Component
       }
       <pre><code>
       {"""
-      <RetinaImage src="./tower.jpg" />
+      <RetinaImage src="./tower.jpg" alt="tower" />
         """}
       </code></pre>
-      <RetinaImage src="./tower.jpg" />
+      <RetinaImage src="./tower.jpg" alt="tower" />
 
       <h3>This image doesn't have a @2x version so stays at its lower resolution version</h3>
       <pre><code>
       {"""
-      <RetinaImage src="./path.jpg" />
+      <RetinaImage src="./path.jpg" alt="path" />
         """}
       </code></pre>
-      <RetinaImage src="./path.jpg" />
+      <RetinaImage src="./path.jpg" alt="path" />
 
       <h3>If you know there's a retina image available, you can disable the check.</h3>
       <pre><code>
       {"""
       <RetinaImage
-       src="./ocean.jpg"
-       checkIfRetinaImgExists=false
-       width=500 />
+        src="./ocean.jpg"
+        alt="ocean"
+        checkIfRetinaImgExists=false
+        width=500 />
         """}
       </code></pre>
-      <RetinaImage src="./ocean.jpg" checkIfRetinaImgExists=false width=500 />
+      <RetinaImage src="./ocean.jpg" alt="ocean" checkIfRetinaImgExists=false width=500 />
 
       <h3>If you don't have predictable names for the retina and non-retina
       versions of images, you can simply pass in an array of images as src where
@@ -60,22 +61,23 @@ module.exports = class Examples extends React.Component
       <pre><code>
       {"""
       <RetinaImage
-       src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
+        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]}
+        alt="houses" />
         """}
       </code></pre>
       <RetinaImage
         style={{width: 500}}
         src={["./houses.jpg", "./bigger-version-of-houses.jpg"]}
-      />
+        alt="houses" />
 
       <h3>For testing updates. Click on the image and it'll cycle forward
       through pictures</h3>
       <pre><code>
       {"""
       <RetinaImage
-       style={{width: 500}}
-       onClick={@cyclePics}
-       src={@state.picsArray[@state.picIndex]} />
+        style={{width: 500}}
+        onClick={@cyclePics}
+        src={@state.picsArray[@state.picIndex]} />
         """}
       </code></pre>
       <RetinaImage
