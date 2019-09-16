@@ -1,3 +1,4 @@
+{crel} = require 'teact'
 React = require 'react'
 PropTypes = require 'prop-types'
 isRetina = require 'is-retina'
@@ -75,9 +76,9 @@ module.exports = class RetinaImage extends React.Component
     if @state.height >= 0
       imgProps.height = @state.height
 
-    <img
-      {...imgProps}
-      ref="img" />
+    crel("img", Object.assign({}, \
+      imgProps, { \
+      "ref": "img"}))
 
   # src can be a href or an array of hrefs.
   wrangleProps: (props=@props) ->

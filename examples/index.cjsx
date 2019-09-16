@@ -1,3 +1,4 @@
+{crel} = require "teact"
 React = require 'react'
 ReactDOM = require 'react-dom'
 Examples = require './examples'
@@ -7,4 +8,4 @@ Examples = require './examples'
 # This may lead to subtle reconciliation issues.
 containerEl = document.createElement('DIV')
 document.body.appendChild(containerEl)
-ReactDOM.render(<Examples />, containerEl)
+ReactDOM.render(crel(Examples, null), containerEl)

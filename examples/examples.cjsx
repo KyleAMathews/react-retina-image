@@ -1,3 +1,4 @@
+{crel} = require "teact"
 React = require('react')
 RetinaImage = require '../src/index'
 isRetina = require 'is-retina'
@@ -15,75 +16,75 @@ module.exports = class Examples extends React.Component
       picIndex: 0
 
   render: ->
-    <div style={"maxWidth":'500px', margin:'0 auto'}>
-      <h1>React-retina-image</h1>
-      <a href="https://github.com/KyleAMathews/react-retina-image">Code on Github</a>
-      <br />
-      <br />
-      {if isRetina() then <h2>Your screen is retina!</h2> else <h2>Your screen is not retina</h2>}
+    crel("div", {"style": ("maxWidth":'500px', margin:'0 auto')},
+      crel("h1", null, "React-retina-image"),
+      crel("a", {"href": "https://github.com/KyleAMathews/react-retina-image"}, "Code on Github"),
+      crel("br", null),
+      crel("br", null),
+      (if isRetina() then crel("h2", null, "Your screen is retina!") else crel("h2", null, "Your screen is not retina")),
 
-      {if isRetina()
-        <h3>This image loaded its retina version after checking if it exists</h3>
+      (if isRetina()
+        crel("h3", null, "This image loaded its retina version after checking if it exists")
        else
-        <h3>This image won't load its retina version</h3>
-      }
-      <pre><code>
-      {"""
+        crel("h3", null, "This image won\'t load its retina version")
+      ),
+      crel("pre", null, crel("code", null,
+      ("""
       <RetinaImage src="./tower.jpg" />
-        """}
-      </code></pre>
-      <RetinaImage src="./tower.jpg" />
+        """)
+      )),
+      crel(RetinaImage, {"src": "./tower.jpg"}),
 
-      <h3>This image doesn't have a @2x version so stays at its lower resolution version</h3>
-      <pre><code>
-      {"""
+      crel("h3", null, "This image doesn\'t have a @2x version so stays at its lower resolution version"),
+      crel("pre", null, crel("code", null,
+      ("""
       <RetinaImage src="./path.jpg" />
-        """}
-      </code></pre>
-      <RetinaImage src="./path.jpg" />
+        """)
+      )),
+      crel(RetinaImage, {"src": "./path.jpg"}),
 
-      <h3>If you know there's a retina image available, you can disable the check.</h3>
-      <pre><code>
-      {"""
+      crel("h3", null, "If you know there\'s a retina image available, you can disable the check."),
+      crel("pre", null, crel("code", null,
+      ("""
       <RetinaImage
        src="./ocean.jpg"
        checkIfRetinaImgExists=false
        width=500 />
-        """}
-      </code></pre>
-      <RetinaImage src="./ocean.jpg" checkIfRetinaImgExists=false width=500 />
+        """)
+      )),
+      crel(RetinaImage, {"src": "./ocean.jpg", "checkIfRetinaImgExists": false, "width": 500}),
 
-      <h3>If you don't have predictable names for the retina and non-retina
+      crel("h3", null, """If you don\'t have predictable names for the retina and non-retina
       versions of images, you can simply pass in an array of images as src where
       the first src is the non-retina version and the second is the retina version.
-      </h3>
-      <pre><code>
-      {"""
+"""),
+      crel("pre", null, crel("code", null,
+      ("""
       <RetinaImage
        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]} />
-        """}
-      </code></pre>
-      <RetinaImage
-        style={{width: 500}}
-        src={["./houses.jpg", "./bigger-version-of-houses.jpg"]}
-      />
+        """)
+      )),
+      crel(RetinaImage, { \
+        "style": ({width: 500}),  \
+        "src": (["./houses.jpg", "./bigger-version-of-houses.jpg"])
+      }),
 
-      <h3>For testing updates. Click on the image and it'll cycle forward
-      through pictures</h3>
-      <pre><code>
-      {"""
+      crel("h3", null, """For testing updates. Click on the image and it\'ll cycle forward
+      through pictures"""),
+      crel("pre", null, crel("code", null,
+      ("""
       <RetinaImage
        style={{width: 500}}
        onClick={@cyclePics}
        src={@state.picsArray[@state.picIndex]} />
-        """}
-      </code></pre>
-      <RetinaImage
-        style={{width: 500}}
-        onClick={@cyclePics}
-        src={@state.picsArray[@state.picIndex]} />
+        """)
+      )),
+      crel(RetinaImage, { \
+        "style": ({width: 500}),  \
+        "onClick": (@cyclePics),  \
+        "src": (@state.picsArray[@state.picIndex])})
 
-    </div>
+    )
 
   cyclePics: =>
     newIndex = @state.picIndex + 1
